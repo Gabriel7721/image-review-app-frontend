@@ -1,10 +1,11 @@
 import { useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function ImageList({ images, fetchImages }) {
   const [commentInputs, setCommentInputs] = useState({});
 
   const handleLike = async (id) => {
-    await fetch(`http://localhost:9999/api/images/${id}/like`, {
+    await fetch(`${API_URL}/api/images/${id}/like`, {
       method: "POST",
     });
     fetchImages(); // gọi lại hàm cha
@@ -13,7 +14,7 @@ function ImageList({ images, fetchImages }) {
   const handleComment = async (id) => {
     const text = commentInputs[id];
     if (!text) return;
-    await fetch(`http://localhost:9999/api/images/${id}/comment`, {
+    await fetch(`${API_URL}/api/images/${id}/comment`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
@@ -30,7 +31,7 @@ function ImageList({ images, fetchImages }) {
         {images.map((img) => (
           <div key={img._id} className="image-card">
             <img
-              src={img.secure_url || `http://localhost:9999/${img.path}`}
+              src={img.secure_url || `${API_URL}/${img.path}`}
               alt={img.originalname}
               width={200}
             />

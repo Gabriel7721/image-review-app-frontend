@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import UploadForm from "./childs/UploadForm";
 import ImageList from "./childs/ImageList";
 import "./Gallery.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
-  const [dark, setDark] = useState(() =>
-    localStorage.getItem("theme") === "dark"
+  const [dark, setDark] = useState(
+    () => localStorage.getItem("theme") === "dark"
   );
 
   const fetchImages = () => {
-    fetch("http://localhost:9999/api/images")
+    fetch(`${API_URL}/api/images`)
       .then((res) => res.json())
       .then(setImages);
   };
